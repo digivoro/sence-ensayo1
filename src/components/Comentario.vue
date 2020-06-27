@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="comentario">
     <v-card class="mx-auto" outlined>
-      <v-list-item three-line>
+      <v-list-item three-line class="card-top">
         <v-list-item-content>
           <div class="overline mb-4">{{ email }}</div>
           <v-list-item-title class="headline mb-1">
@@ -13,7 +13,14 @@
         </v-list-item-content>
 
         <v-list-item-avatar size="80" color="grey">
-          <v-img :src="imagen" :alt="nombre"></v-img>
+          <v-img
+            :src="
+              imagen
+                ? imagen
+                : 'https://i.pinimg.com/originals/4c/48/34/4c4834a584812c2693369a3626047cd9.png'
+            "
+            :alt="nombre"
+          ></v-img>
         </v-list-item-avatar>
       </v-list-item>
       <v-card-text>
@@ -51,4 +58,10 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.comentario {
+  .card-top {
+    background-color: orange;
+  }
+}
+</style>

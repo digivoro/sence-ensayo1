@@ -14,17 +14,19 @@
         ></v-img>
       </template>
 
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
-
       <v-toolbar-title>Esferas del Dragón</v-toolbar-title>
 
       <v-spacer></v-spacer>
-
-      <v-btn icon>
-        <v-icon>mdi-magnify</v-icon>
+      <v-btn
+        v-if="currentUser"
+        class="ma-2"
+        color="orange"
+        @click="onLogoutClick"
+      >
+        Cerrar Sesión
       </v-btn>
     </v-app-bar>
-    <v-container style="height: 200px;"></v-container>
+    <v-container style="height: 150px;"></v-container>
 
     <v-content>
       <router-view />
@@ -34,6 +36,7 @@
 
 <script>
 import Axios from "axios";
+import { mapState, mapActions } from "vuex";
 
 export default {
   name: "App",
@@ -45,6 +48,8 @@ export default {
   }),
 
   methods: {
+    ...mapActions(["logout"]),
+
     getRandomDBCharacterImgUrl: async function() {
       const base_url = "https://dragon-ball-api.herokuapp/api/character/";
       const url = base_url + this.getRandomDBCharacter();
@@ -55,8 +60,13 @@ export default {
     getRandomDBCharacter: () => {
       const characterList = ["Goku", "Gohan", "Vegeta"];
       return characterList[Math.floor(Math.random() * characterList.length)];
+    },
+    onLogoutClick: function() {
+      this.logout();
     }
   },
+
+  computed: mapState(["currentUser"]),
 
   mounted: function() {}
 };

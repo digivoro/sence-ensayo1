@@ -1,11 +1,14 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import Axios from "axios";
+import Firebase from "firebase";
+import Router from "../router";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    currentUser: null,
     comentarios: [
       {
         nombre: "Don Pollo",
@@ -59,6 +62,14 @@ export default new Vuex.Store({
   },
 
   mutations: {
+    LOGIN: function(state, email) {
+      state.currentUser = email;
+    },
+
+    LOGOUT: function(state) {
+      state.currentUser = null;
+    },
+
     AGREGAR_COMENTARIOS_INICIALES(state, { usuarios, comentarios }) {
       let nuevosComentarios = usuarios.map((usuario, index) => {
         let nuevoComentario = {
@@ -83,7 +94,7 @@ export default new Vuex.Store({
       let res = await Axios.get(
         `https://randomuser.me/api/?results=${cantidad}`
       );
-      console.log(res.data.results);
+      // console.log(res.data.results);
       return res.data.results;
     },
 
@@ -91,7 +102,7 @@ export default new Vuex.Store({
       let res = await Axios.get(
         `https://baconipsum.com/api/?type=all-meat&paras=${cantidad}&start-with-lorem=1`
       );
-      console.log(res.data);
+      // console.log(res.data);
 
       return res.data;
     },
@@ -110,6 +121,31 @@ export default new Vuex.Store({
       );
 
       commit("AGREGAR_COMENTARIOS_INICIALES", { usuarios, comentarios });
+    },
+
+    login: async function({ commit }, { email, password }) {
+      try {
+        console.log("email", email);
+        let res = await Firebase.auth().signInWithEmailAndPassword(
+          email,
+          password
+        );
+
+        commit("LOGIN", res.user.email);
+        Router.push("/comentarios");
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    logout: async function({ commit }) {
+      try {
+        await Firebase.auth().signOut();
+        commit("LOGOUT");
+        Router.push("/");
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 });
