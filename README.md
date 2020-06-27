@@ -8,7 +8,12 @@ generados de forma descendiente cronológicamente y que permita un buscador inte
 que filtre los comentarios por palabras claves
 
 ## Versión en vivo
--------------
+
+[Examen SENCE - Ensayo 1](https://crud-rest-c9ba3.web.app/)
+
+Usuario de prueba:
+user: **test@sence.cl**
+pass: **asdf1234**
 
 ## Preparación del proyecto
 
