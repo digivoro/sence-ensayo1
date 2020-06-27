@@ -55,34 +55,14 @@
               md="6"
               lg="6"
             >
-              <!-- <v-card>
-                <v-card-title class="subheading font-weight-bold">{{
-                  item.name
-                }}</v-card-title>
-
-                <v-divider></v-divider>
-
-                <v-list dense>
-                  <v-list-item
-                    v-for="(key, index) in filteredKeys"
-                    :key="index"
-                  >
-                    <v-list-item-content
-                      :class="{ 'blue--text': sortBy === key }"
-                      >{{ key }}:</v-list-item-content
-                    >
-                    <v-list-item-content
-                      class="align-end"
-                      :class="{ 'blue--text': sortBy === key }"
-                      >{{ item[key.toLowerCase()] }}</v-list-item-content
-                    >
-                  </v-list-item>
-                </v-list>
-              </v-card> -->
               <Comentario
                 :nombre="item.nombre"
                 :comentario="item.comentario"
                 :calificacion="item.calificacion"
+                :email="item.email"
+                :edad="item.edad"
+                :genero="item.genero"
+                :imagen="item.imagen"
               />
             </v-col>
           </v-row>
@@ -151,7 +131,7 @@
 
 <script>
 import Comentario from "../components/Comentario";
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 export default {
   name: "Comentarios",
@@ -287,6 +267,8 @@ export default {
   },
 
   methods: {
+    ...mapActions(["crearListaComentarios"]),
+
     nextPage() {
       if (this.page + 1 <= this.numberOfPages) this.page += 1;
     },
@@ -296,6 +278,10 @@ export default {
     updateItemsPerPage(number) {
       this.itemsPerPage = number;
     }
+  },
+
+  created: function() {
+    this.crearListaComentarios(5);
   }
 };
 </script>
