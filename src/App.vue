@@ -1,56 +1,63 @@
 <template>
   <v-app>
-    <v-app-bar app color="primary" dark>
-      <div class="d-flex align-center">
+    <v-app-bar
+      fixed
+      color="#fcb69f"
+      dark
+      shrink-on-scroll
+      src="https://static.bandainamcoent.eu/high/dragon-ball/dragonball-fighters-z/00-page-setup/dbfz_banner.jpg"
+    >
+      <template v-slot:img="{ props }">
         <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
+          v-bind="props"
+          gradient="to top right, rgba(100,30,60,.8), rgba(128,20,40,.3)"
+        ></v-img>
+      </template>
 
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
+      <v-app-bar-nav-icon></v-app-bar-nav-icon>
+
+      <v-toolbar-title>Esferas del Dragón</v-toolbar-title>
 
       <v-spacer></v-spacer>
 
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
+      <v-btn icon>
+        <v-icon>mdi-magnify</v-icon>
       </v-btn>
     </v-app-bar>
+    <v-container style="height: 200px;"></v-container>
 
     <v-content>
-      <HelloWorld />
+      <router-view />
     </v-content>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld";
+import Axios from "axios";
 
 export default {
   name: "App",
 
-  components: {
-    HelloWorld
-  },
+  components: {},
 
   data: () => ({
-    //
-  })
+    charImgUrl: ""
+  }),
+
+  methods: {
+    getRandomDBCharacterImgUrl: async function() {
+      const base_url = "https://dragon-ball-api.herokuapp/api/character/";
+      const url = base_url + this.getRandomDBCharacter();
+      let res = await Axios.get(url);
+
+      return res.data.image;
+    },
+    getRandomDBCharacter: () => {
+      const characterList = ["Goku", "Gohan", "Vegeta"];
+      return characterList[Math.floor(Math.random() * characterList.length)];
+    }
+  },
+
+  mounted: function() {}
 };
 </script>

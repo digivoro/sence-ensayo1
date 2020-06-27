@@ -1,24 +1,33 @@
 # sence-ensayo1
 
-## Project setup
+## Descripción
+Aplicación que funciona como canal de comunicación para feedbacks
+para mejoramiento de calidad entre los trabajadores de la empresa japonesa Esferas del
+Dragón, con el objetivo de tener una vista en la que se visualicen todos los comentarios
+generados de forma descendiente cronológicamente y que permita un buscador inteligente
+que filtre los comentarios por palabras claves
+
+## Versión en vivo
+-------------
+
+## Preparación del proyecto
+
+### Instalación de dependencias
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### Compilación y auto-refresh de página para desarrollo
 ```
-npm run serve
+npm start
 ```
 
-### Compiles and minifies for production
+### Compilación y minificación para producción
 ```
 npm run build
 ```
 
-### Lints and fixes files
+### Linter y corrección de errores
 ```
 npm run lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
